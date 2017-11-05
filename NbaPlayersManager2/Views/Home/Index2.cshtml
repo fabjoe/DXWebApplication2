@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Index2";
+}
+@Html.Action("GridViewPartial")
+<script language="javascript" type="text/javascript">
+
+	function OnCustomButtonClick(s, e, url) {
+		if (e.buttonID == 'btn') {		
+			var value = s.GetRowKey(e.visibleIndex);
+			window.location.href = url + "?SelectedPlayer=" + value;
+		}
+	}
+		
+</script>

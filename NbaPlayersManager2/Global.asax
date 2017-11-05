@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="NbaPlayersManager2.MvcApplication" Language="C#" %>

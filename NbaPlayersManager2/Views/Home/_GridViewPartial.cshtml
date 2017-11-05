@@ -1,0 +1,48 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewPartial" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ButtonRenderMode = GridCommandButtonRenderMode.Image;
+        GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton() { ID = "btn", Text=""};
+        customButton.Image.IconID = DevExpress.Web.ASPxThemes.IconID.EditCopy16x16;
+        settings.CommandColumn.CustomButtons.Add(customButton);
+        settings.ClientSideEvents.CustomButtonClick = string.Format("function(s, e) {{ if(e.buttonID == 'btn') OnCustomButtonClick(s,e,\"{0}\"); }}", DevExpressHelper.GetUrl(new { Controller = "Home", Action = "CustomClick" }));
+        settings.KeyFieldName = "PlayerID";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("PlayerID");
+        settings.Columns.Add("PlayerName");
+        settings.Columns.Add("MinsPerGame");
+        settings.Columns.Add("EffPerGame");
+        settings.Columns.Add("EffMin");
+        settings.Columns.Add("GamesPlayed");
+        settings.Columns.Add("FieldsGoalPercentage");
+        settings.Columns.Add("ThreePointsPercentage");
+        settings.Columns.Add("FreeThrowsPercentage");
+        settings.Columns.Add("ReboundsPerGame");
+        settings.Columns.Add("AssistsPerGame");
+        settings.Columns.Add("StealsPerGame");
+        settings.Columns.Add("BlocksPerGame");
+        settings.Columns.Add("TurnoversPerGame");
+        settings.Columns.Add("PointsPerGame");
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
